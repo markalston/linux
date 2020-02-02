@@ -1183,6 +1183,12 @@ mapped:
 			b = field->logical_maximum = 255;
 		}
 
+		
+      		if ((device->quirks & HID_QUIRK_ANALOG_RANGE_HACK) && (usage->code == ABS_X || usage->code == ABS_Y)) {
+         		a = field->logical_minimum = -32768;
+         		b = field->logical_maximum = 32767;
+      		}
+		
 		if (field->application == HID_GD_GAMEPAD || field->application == HID_GD_JOYSTICK)
 			input_set_abs_params(input, usage->code, a, b, (b - a) >> 8, (b - a) >> 4);
 		else	input_set_abs_params(input, usage->code, a, b, 0, 0);
